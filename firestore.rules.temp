@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // TEMPORARY RULES FOR SEEDING - ALLOW WRITES WITHOUT AUTH
+    // ⚠️ WARNING: Only use these rules temporarily for seeding!
+    // After seeding, restore the original firestore.rules
+    
+    // Products - public read, allow write for seeding
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true; // TEMPORARY: Allow writes without auth
+    }
+    
+    // Categories - public read, allow write for seeding
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if true; // TEMPORARY: Allow writes without auth
+    }
+    
+    // Orders - keep secure (users can read/create/update their own)
+    match /orders/{orderId} {
+      allow read: if request.auth != null && 
+        resource != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow update: if request.auth != null && 
+        resource != null && resource.data.userId == request.auth.uid;
+    }
+    
+    // Users - keep secure (users can read/update their own)
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
+
