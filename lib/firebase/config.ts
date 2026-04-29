@@ -30,8 +30,25 @@ function getFirebaseConfig() {
 // For backward compatibility, also export as object (but it will be created lazily)
 const firebaseConfig = getFirebaseConfig();
 
-// Server-side validation (for scripts like seed.ts)
-if (typeof window === 'undefined') {
+// Server-side validation is only for explicit Node scripts (seed, admin setup, etc).
+// Next.js build/prerender also runs in Node; avoid noisy logs there.
+const serverValidationLifecycleEvents = new Set([
+  'seed',
+  'test-firebase',
+  'create-test-users',
+  'create-user-doc',
+  'setup-admin',
+  'remove-duplicates',
+  'remove-duplicates:delete'
+]);
+
+const shouldValidateServerSideConfig =
+  typeof window === 'undefined' &&
+  (process.env.WHITELINE_VALIDATE_FIREBASE === '1' ||
+    (process.env.npm_lifecycle_event &&
+      serverValidationLifecycleEvents.has(process.env.npm_lifecycle_event)));
+
+if (shouldValidateServerSideConfig) {
   const hasPlaceholders = 
     firebaseConfig.projectId === 'your-project-id' ||
     firebaseConfig.projectId.includes('your-') ||
