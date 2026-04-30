@@ -54,6 +54,14 @@ export default function HomePage() {
             </h1>
           </motion.div>
           <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.06, ease: [0.4, 0, 0.2, 1] }}
+            className="text-xs sm:text-sm md:text-base font-semibold tracking-[0.22em] text-white/85 uppercase mb-3 sm:mb-4"
+          >
+            SMART CLOTHING FOR SMARTER PEOPLE
+          </motion.p>
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
