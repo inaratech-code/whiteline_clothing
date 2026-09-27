@@ -23,26 +23,42 @@ export const AI_IMAGE_SERVICES = {
 export function getProductImages(category: 'shirts' | 'pants' | 'shorts', color?: string): string[] {
   const baseImages = {
     shirts: [
-      'https://images.unsplash.com/photo-1594938291221-94f5044435e1?w=800&q=80',
-      'https://images.unsplash.com/photo-1624222247344-550fb60583fd?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
+      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80',
       'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80',
       'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=800&q=80',
     ],
     pants: [
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80',
       'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80',
     ],
     shorts: [
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80',
       'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80',
     ],
   };
 
   return baseImages[category] || baseImages.shirts;
+}
+
+const BROKEN_IMAGE_IDS: Record<string, string> = {
+  'photo-1624378515194-6b8c57a2a1aa': 'photo-1541099649105-f69ad21f3246',
+  'photo-1624222247344-550fb60583fd': 'photo-1541099649105-f69ad21f3246',
+  'photo-1594938291221-94f5044435e1': 'photo-1541099649105-f69ad21f3246',
+};
+
+/** Replace known-dead Unsplash URLs still stored in Firestore. */
+export function resolveProductImageUrl(url: string): string {
+  for (const [broken, replacement] of Object.entries(BROKEN_IMAGE_IDS)) {
+    if (url.includes(broken)) {
+      return url.replace(broken, replacement);
+    }
+  }
+  return url;
 }
 
 /**

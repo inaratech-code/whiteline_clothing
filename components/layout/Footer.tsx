@@ -1,169 +1,105 @@
-'use client';
-
 import Link from 'next/link';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { FooterBrandBackdrop } from '@/components/brand/FooterBrandBackdrop';
+import { FooterNewsletter } from '@/components/layout/FooterNewsletter';
+
+const linkClass =
+  'text-white/90 hover:text-[#e88011] transition-colors duration-200 break-words [text-shadow:0_1px_3px_rgba(0,0,0,0.45)]';
+
+const headingClass =
+  'text-[11px] sm:text-sm font-bold mb-2 sm:mb-4 text-white uppercase tracking-[0.12em] sm:tracking-[0.2em] [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]';
 
 export function Footer() {
-  const [email, setEmail] = useState('');
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement newsletter subscription
-    alert('Thank you for subscribing!');
-    setEmail('');
-  };
-
   return (
-    <footer className="border-t bg-background">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12">
-        {/* Newsletter Section - LOGO Style */}
-        <div className="border-b pb-6 sm:pb-8 mb-6 sm:mb-8">
-          <div className="max-w-md mx-auto text-center px-4">
-            <h3 className="text-xl sm:text-2xl font-bold mb-2">SIGN UP FOR UPDATES</h3>
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2 mt-4">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 text-sm sm:text-base"
-                required
-              />
-              <Button type="submit" className="bg-[#1e40af] text-white hover:bg-[#1e3a8a] text-sm sm:text-base w-full sm:w-auto">
-                SUBSCRIBE
-              </Button>
-            </form>
-          </div>
-        </div>
-
-        {/* Main Footer Content - LOGO Style Multi-column */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
-          {/* Shop */}
-          <div>
-            <h4 className="font-semibold mb-4">SHOP</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/shop?category=shirts" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Shirts
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop?category=pants" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Pants
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop?category=shorts" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Shorts
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop" className="text-muted-foreground hover:text-foreground transition-colors">
-                  New Arrivals
-                </Link>
-              </li>
-            </ul>
+    <footer className="min-w-0 w-full max-w-[100vw] overflow-x-hidden font-whiteline text-white">
+      <FooterBrandBackdrop>
+        <div className="w-full max-w-[1440px] mx-auto section-x py-8 sm:py-10 md:py-14">
+          <div className="border-b border-white/15 pb-6 sm:pb-8 md:pb-10 mb-6 sm:mb-8 md:mb-10">
+            <div className="max-w-xl mx-auto text-center">
+              <Link href="/" className="inline-block group mb-3 sm:mb-4">
+                <span className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white group-hover:text-[#e88011] transition-colors drop-shadow-md">
+                  WHITE LINE
+                </span>
+              </Link>
+              <p className="text-xs sm:text-sm font-normal tracking-[0.18em] sm:tracking-[0.22em] text-white/90 uppercase mb-1 drop-shadow-md">
+                SMART CLOTHING FOR
+              </p>
+              <p className="text-xs sm:text-sm font-normal tracking-[0.18em] sm:tracking-[0.22em] text-white/90 uppercase mb-4 sm:mb-6 px-2 drop-shadow-md">
+                SMARTER PEOPLE
+              </p>
+              <FooterNewsletter />
+            </div>
           </div>
 
-          {/* Company */}
-          <div>
-            <h4 className="font-semibold mb-4">COMPANY</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-                  About
-                </a>
-              </li>
-            </ul>
-          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 sm:gap-x-8 sm:gap-y-8 md:gap-10 mb-6 sm:mb-8 md:mb-10">
+            <div className="min-w-0">
+              <h4 className={headingClass}>Shop</h4>
+              <ul className="space-y-1.5 sm:space-y-2.5 text-[11px] sm:text-sm">
+                <li><Link href="/shop?category=shirts" className={linkClass}>Shirts</Link></li>
+                <li><Link href="/shop?category=pants" className={linkClass}>Trousers</Link></li>
+                <li><Link href="/shop?category=shorts" className={linkClass}>Shorts</Link></li>
+                <li><Link href="/shop" className={linkClass}>New Arrivals</Link></li>
+              </ul>
+            </div>
 
-          {/* Help */}
-          <div>
-            <h4 className="font-semibold mb-4">HELP</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/size-guide" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Size Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/shipping" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Delivery Information
-                </Link>
-              </li>
-              <li>
-                <Link href="/returns" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Exchange Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Terms of Use
-                </Link>
-              </li>
-            </ul>
-          </div>
+            <div className="min-w-0">
+              <h4 className={headingClass}>Company</h4>
+              <ul className="space-y-1.5 sm:space-y-2.5 text-[11px] sm:text-sm">
+                <li><a href="/#about" className={linkClass}>About Us</a></li>
+                <li><Link href="/contact" className={linkClass}>Contact</Link></li>
+              </ul>
+            </div>
 
-          {/* Join Us / Contact */}
-          <div>
-            <h4 className="font-semibold mb-4">JOIN US</h4>
-            <ul className="space-y-2 text-sm mb-4">
-              <li>
-                <Link href="/auth/signup" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Sign Up for Updates
-                </Link>
-              </li>
-              <li>
-                <Link href="/auth/login" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Login / Register
-                </Link>
-              </li>
-            </ul>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">+977-XXXXXXXXXX</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <a href="mailto:info@whiteline.com" className="text-muted-foreground hover:text-foreground transition-colors">
-                  info@whiteline.com
-                </a>
-              </div>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
-                <span className="text-muted-foreground">Kathmandu, Nepal</span>
+            <div className="min-w-0">
+              <h4 className={headingClass}>Help</h4>
+              <ul className="space-y-1.5 sm:space-y-2.5 text-[11px] sm:text-sm">
+                <li><Link href="/size-guide" className={linkClass}>Size Guide</Link></li>
+                <li><Link href="/shipping" className={linkClass}>Delivery Information</Link></li>
+                <li><Link href="/returns" className={linkClass}>Exchange Policy</Link></li>
+                <li><Link href="/privacy" className={linkClass}>Privacy Policy</Link></li>
+                <li><Link href="/terms" className={linkClass}>Terms of Use</Link></li>
+              </ul>
+            </div>
+
+            <div className="min-w-0">
+              <h4 className={headingClass}>Join Us</h4>
+              <ul className="space-y-1.5 sm:space-y-2.5 text-[11px] sm:text-sm mb-3 sm:mb-5">
+                <li><Link href="/auth/signup" className={linkClass}>Create Account</Link></li>
+                <li><Link href="/auth/login" className={linkClass}>Login / Register</Link></li>
+              </ul>
+              <div className="space-y-1.5 sm:space-y-2.5 text-[11px] sm:text-sm">
+                <div className="flex items-center gap-2 min-w-0">
+                  <Phone className="h-4 w-4 text-[#e88011] shrink-0" />
+                  <span className="text-white/75 truncate">+977-XXXXXXXXXX</span>
+                </div>
+                <div className="flex items-center gap-2 min-w-0">
+                  <Mail className="h-4 w-4 text-[#e88011] shrink-0" />
+                  <a href="mailto:info@whiteline.com" className={`${linkClass} truncate`}>info@whiteline.com</a>
+                </div>
+                <div className="flex items-start gap-2 min-w-0">
+                  <MapPin className="h-4 w-4 text-[#e88011] shrink-0 mt-0.5" />
+                  <span className="text-white/75">Kathmandu, Nepal</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Bottom Bar - LOGO Style */}
-        <div className="pt-8 border-t">
-          <div className="text-center text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} Copyright. All rights reserved Whiteline.</p>
+          <div className="pt-6 sm:pt-8 border-t border-white/15">
+            <p className="text-center text-[11px] xs:text-xs sm:text-sm text-white/55 px-2">
+              &copy; 2026 Whiteline &amp;{' '}
+              <a
+                href="https://www.inaratech.com.np"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-inherit no-underline hover:text-[#e88011] transition-colors"
+              >
+                Inara Tech
+              </a>
+              . All rights reserved.
+            </p>
           </div>
         </div>
-      </div>
+      </FooterBrandBackdrop>
     </footer>
   );
 }
-

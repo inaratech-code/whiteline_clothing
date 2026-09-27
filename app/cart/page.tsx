@@ -3,12 +3,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCartContext } from '@/contexts/CartContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Trash2, Plus, Minus } from 'lucide-react';
+import { resolveProductImageUrl } from '@/lib/utils/ai-images';
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, totalPrice, totalItems } = useCartContext();
+  const { user } = useAuthContext();
+  const checkoutHref = user ? '/checkout' : '/auth/login?redirect=/checkout';
 
   if (items.length === 0) {
     return (
@@ -34,7 +38,7 @@ export default function CartPage() {
               <Link href={`/products/${item.productId}`} className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-muted">
                 {item.product.images && item.product.images.length > 0 ? (
                   <Image
-                    src={item.product.images[0]}
+                    src={resolveProductImageUrl(item.product.images[0])}
                     alt={item.product.name}
                     fill
                     className="object-cover"
@@ -112,9 +116,9 @@ export default function CartPage() {
               <span>NPR {(totalPrice + (totalPrice >= 1500 ? 0 : 200)).toLocaleString()}</span>
             </div>
 
-            <Link href="/checkout" className="block">
+            <Link href={checkoutHref} className="block">
               <Button className="w-full" size="lg">
-                Proceed to Checkout
+                {user ? 'Proceed to Checkout' : 'Login to Checkout'}
               </Button>
             </Link>
 

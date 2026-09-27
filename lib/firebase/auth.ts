@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword, 
   signOut, 
   onAuthStateChanged,
+  sendPasswordResetEmail,
   User as FirebaseUser,
   updateProfile
 } from 'firebase/auth';
@@ -80,6 +81,24 @@ export async function logOut() {
   } catch (error) {
     console.error('Error signing out:', error);
     throw error;
+  }
+}
+
+export async function resetPassword(email: string) {
+  try {
+    await sendPasswordResetEmail(auth, email.trim());
+  } catch (error: unknown) {
+    const firebaseError = error as { code?: string; message?: string };
+
+    if (firebaseError.code === 'auth/invalid-email') {
+      throw new Error('Invalid email address format.');
+    }
+
+    if (firebaseError.code === 'auth/user-not-found') {
+      throw new Error('No account found with that email address.');
+    }
+
+    throw new Error(firebaseError.message || 'Failed to send password reset email.');
   }
 }
 

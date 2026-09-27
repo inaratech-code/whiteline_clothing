@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { Trash2, Plus, Minus, X, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { resolveProductImageUrl } from '@/lib/utils/ai-images';
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,11 +26,11 @@ export function CartDrawer() {
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="relative text-white hover:bg-slate-800 hover:text-[#1e40af]"
+        className="relative text-white hover:bg-white/10 hover:text-[#e88011]"
       >
         <ShoppingBag className="h-5 w-5" />
         {totalItems > 0 && (
-          <span className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center rounded-full bg-[#1e40af] text-white text-xs font-bold">
+          <span className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center rounded-full bg-[#e88011] text-white text-xs font-bold">
             {totalItems}
           </span>
         )}
@@ -87,7 +88,7 @@ export function CartDrawer() {
                       <ShoppingBag className="h-16 w-16 text-gray-400 mb-4" />
                       <p className="text-lg font-semibold mb-2 text-gray-900">Your cart is empty</p>
                       <p className="text-gray-600 mb-6">Start adding items to your cart</p>
-                      <Button onClick={() => setIsOpen(false)} asChild className="bg-[#1e40af] text-white hover:bg-[#1e3a8a]">
+                      <Button onClick={() => setIsOpen(false)} asChild className="bg-[#0a205c] text-white hover:bg-[#081a4a]">
                         <Link href="/shop">Continue Shopping</Link>
                       </Button>
                     </div>
@@ -103,7 +104,7 @@ export function CartDrawer() {
                           >
                             {item.product.images && item.product.images.length > 0 ? (
                               <Image
-                                src={item.product.images[0]}
+                                src={resolveProductImageUrl(item.product.images[0])}
                                 alt={item.product.name}
                                 fill
                                 className="object-cover"
@@ -191,7 +192,7 @@ export function CartDrawer() {
                     <div className="space-y-3 pt-2">
                       {user ? (
                         <Button 
-                          className="w-full h-12 bg-[#1e40af] text-white hover:bg-[#1e3a8a] text-base font-semibold"
+                          className="w-full h-12 bg-[#0a205c] text-white hover:bg-[#081a4a] text-base font-semibold"
                           onClick={() => setIsOpen(false)}
                           asChild
                         >
@@ -199,7 +200,7 @@ export function CartDrawer() {
                         </Button>
                       ) : (
                         <Button 
-                          className="w-full h-12 bg-[#1e40af] text-white hover:bg-[#1e3a8a] text-base font-semibold"
+                          className="w-full h-12 bg-[#0a205c] text-white hover:bg-[#081a4a] text-base font-semibold"
                           onClick={() => setIsOpen(false)}
                           asChild
                         >

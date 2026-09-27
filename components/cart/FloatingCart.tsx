@@ -4,13 +4,17 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCartContext } from '@/contexts/CartContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { ShoppingBag, X, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { resolveProductImageUrl } from '@/lib/utils/ai-images';
 
 export function FloatingCart() {
   const { items, totalItems, totalPrice } = useCartContext();
+  const { user } = useAuthContext();
   const [isVisible, setIsVisible] = useState(false);
+  const checkoutHref = user ? '/checkout' : '/auth/login?redirect=/checkout';
 
   useEffect(() => {
     // Show floating cart when items are added or changed
@@ -33,9 +37,9 @@ export function FloatingCart() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', damping: 30, stiffness: 300, duration: 0.3 }}
-          className="fixed bottom-6 right-6 z-[100]"
+          className="fixed bottom-4 left-4 right-4 sm:bottom-6 sm:left-auto sm:right-6 z-[100] max-w-[calc(100vw-2rem)] sm:max-w-[400px]"
         >
-          <div className="bg-slate-900 text-white rounded-lg shadow-2xl border-2 border-slate-700 p-4 min-w-[320px] max-w-[400px] ring-2 ring-[#1e40af]/50">
+          <div className="bg-slate-900 text-white rounded-lg shadow-2xl border-2 border-slate-700 p-4 w-full sm:min-w-[320px] ring-2 ring-[#e88011]/50">
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-2">
                 <ShoppingBag className="h-5 w-5" />
@@ -57,7 +61,7 @@ export function FloatingCart() {
                   <div className="relative w-12 h-12 flex-shrink-0 bg-slate-800 rounded overflow-hidden">
                     {item.product.images && item.product.images.length > 0 ? (
                       <Image
-                        src={item.product.images[0]}
+                        src={resolveProductImageUrl(item.product.images[0])}
                         alt={item.product.name}
                         fill
                         className="object-cover"
@@ -98,11 +102,11 @@ export function FloatingCart() {
                   <Link href="/cart">View Cart</Link>
                 </Button>
                 <Button
-                  className="flex-1 bg-[#1e40af] text-white hover:bg-[#1e3a8a]"
+                  className="flex-1 bg-[#0a205c] text-white hover:bg-[#081a4a]"
                   onClick={() => setIsVisible(false)}
                   asChild
                 >
-                  <Link href="/checkout" className="flex items-center justify-center gap-1">
+                  <Link href={checkoutHref} className="flex items-center justify-center gap-1">
                     Checkout
                     <ChevronRight className="h-4 w-4" />
                   </Link>

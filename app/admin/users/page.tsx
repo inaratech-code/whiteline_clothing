@@ -21,23 +21,21 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch users and orders independently
-        const [allUsers, allOrders] = await Promise.all([
-          getAllUsers(),
-          getOrders() // Fetch all orders independently
-        ]);
-        setUsers(allUsers);
-        setOrders(allOrders);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [allUsers, allOrders] = await Promise.all([getAllUsers(), getOrders()]);
+      setUsers(allUsers);
+      setOrders(allOrders);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleRoleUpdate = async (userId: string, newRole: 'user' | 'admin') => {
     try {
@@ -115,8 +113,13 @@ export default function AdminUsersPage() {
             <h1 className="text-4xl font-bold mb-2">User Analytics</h1>
             <p className="text-white/90">Track visitor engagement, session duration, and browsing behaviour.</p>
           </div>
-          <Button variant="outline" className="bg-white text-[#dc2626] hover:bg-white/90 border-white">
-            Refresh
+          <Button
+            variant="outline"
+            className="bg-white text-[#dc2626] hover:bg-white/90 border-white"
+            onClick={fetchData}
+            disabled={loading}
+          >
+            {loading ? 'Refreshing...' : 'Refresh'}
           </Button>
         </div>
       </div>

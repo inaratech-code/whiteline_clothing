@@ -1,13 +1,25 @@
 'use client';
 
+import { useState } from 'react';
 import { useOrders } from '@/lib/hooks/useOrders';
 import { useProducts } from '@/lib/hooks/useProducts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 export default function AdminDashboard() {
-  const { orders } = useOrders();
-  const { products } = useProducts();
+  const { orders, mutate: mutateOrders } = useOrders();
+  const { products, mutate: mutateProducts } = useProducts();
+  const [activeChart, setActiveChart] = useState<'daily' | 'weekly'>('daily');
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await Promise.all([mutateOrders(), mutateProducts()]);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const totalSales = orders.reduce((sum, order) => sum + order.totalAmount, 0);
   const pendingOrders = orders.filter((o) => o.status === 'pending').length;
@@ -77,8 +89,13 @@ export default function AdminDashboard() {
           <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
           <p className="text-muted-foreground">Monitor revenue, orders, and daily performance</p>
         </div>
-        <Button variant="outline" className="border-[#1e40af] text-[#1e40af]">
-          Refresh
+        <Button
+          variant="outline"
+          className="border-[#1e40af] text-[#1e40af]"
+          onClick={handleRefresh}
+          disabled={refreshing}
+        >
+          {refreshing ? 'Refreshing...' : 'Refresh'}
         </Button>
       </div>
 
@@ -121,11 +138,18 @@ export default function AdminDashboard() {
       {/* Daily Sales & Weekly Sales */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Daily Sales Chart */}
-        <Card className="border-2">
+        <Card className={`border-2 ${activeChart === 'daily' ? 'ring-2 ring-[#1e40af]' : ''}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Daily Sales</CardTitle>
-              <Button variant="ghost" size="sm" className="text-xs">Trend</Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`text-xs ${activeChart === 'daily' ? 'text-[#1e40af] font-semibold' : ''}`}
+                onClick={() => setActiveChart('daily')}
+              >
+                Trend
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
@@ -171,11 +195,18 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Weekly Sales Chart */}
-        <Card className="border-2">
+        <Card className={`border-2 ${activeChart === 'weekly' ? 'ring-2 ring-[#dc2626]' : ''}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Weekly Sales</CardTitle>
-              <Button variant="ghost" size="sm" className="text-xs">Overview</Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`text-xs ${activeChart === 'weekly' ? 'text-[#dc2626] font-semibold' : ''}`}
+                onClick={() => setActiveChart('weekly')}
+              >
+                Overview
+              </Button>
             </div>
           </CardHeader>
           <CardContent>

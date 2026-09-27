@@ -3,7 +3,6 @@ import { User as FirebaseUser } from 'firebase/auth';
 import { getCurrentUser, signIn, signUp, logOut } from '@/lib/firebase/auth';
 import { getUserById } from '@/lib/firebase/users';
 import { User } from '@/lib/types';
-import { clearUserData, clearAllUserData } from '@/lib/utils/storage';
 
 export function useAuth() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -62,9 +61,6 @@ export function useAuth() {
 
   const handleSignIn = async (email: string, password: string) => {
     try {
-      // Clear all guest data before signing in
-      clearUserData(null); // Clear guest data
-      
       const user = await signIn(email, password);
       setUser(user);
       
@@ -90,9 +86,6 @@ export function useAuth() {
   };
 
   const handleSignUp = async (email: string, password: string, name: string) => {
-    // Clear all guest data before signing up
-    clearUserData(null); // Clear guest data
-    
     const user = await signUp(email, password, name);
     const userDoc = await getUserById(user.uid);
     setUser(user);
@@ -101,11 +94,6 @@ export function useAuth() {
   };
 
   const handleSignOut = async () => {
-    // Clear all user-specific data before signing out
-    if (user) {
-      clearUserData(user.uid);
-    }
-    
     await logOut();
     setUser(null);
     setUserData(null);

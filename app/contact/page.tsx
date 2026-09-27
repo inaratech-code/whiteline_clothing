@@ -10,6 +10,7 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { TextReveal } from '@/components/animations/TextReveal';
 import { motion } from 'framer-motion';
+import { submitContactForm } from '@/lib/firebase/forms';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -19,16 +20,25 @@ export default function ContactPage() {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would send this to your backend/email service
-    console.log('Contact form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setLoading(true);
+    setError('');
+
+    try {
+      await submitContactForm(formData);
+      setSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 3000);
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Contact form submission failed:', err);
+      setError('Failed to send your message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -116,6 +126,11 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && (
+                    <div className="rounded-lg border border-red-700 bg-red-950/50 p-3 text-sm text-white">
+                      {error}
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="name" className="text-white">Name</Label>
@@ -160,8 +175,8 @@ export default function ContactPage() {
                       className="bg-slate-800/50 border-slate-700 text-white placeholder:text-white/50"
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a]">
-                    Send Message
+                  <Button type="submit" disabled={loading} className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a]">
+                    {loading ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               )}

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@/lib/types';
+import { resolveProductImageUrl } from '@/lib/utils/ai-images';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
@@ -24,10 +25,10 @@ export function ProductCard({ product }: ProductCardProps) {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
-                className="w-full h-full"
+                className="relative w-full h-full"
               >
                 <Image
-                  src={product.images[0]}
+                  src={resolveProductImageUrl(product.images[0])}
                   alt={product.name}
                   fill
                   className="object-cover"

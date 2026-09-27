@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createOrder } from '@/lib/firebase/orders';
 import { ShoppingBag, MapPin, CreditCard } from 'lucide-react';
+import { resolveProductImageUrl } from '@/lib/utils/ai-images';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -208,7 +209,7 @@ export default function CheckoutPage() {
                     <Link href={`/products/${item.productId}`} className="relative w-20 h-20 flex-shrink-0 bg-muted rounded-lg overflow-hidden">
                       {item.product.images && item.product.images.length > 0 ? (
                         <Image
-                          src={item.product.images[0]}
+                          src={resolveProductImageUrl(item.product.images[0])}
                           alt={item.product.name}
                           fill
                           className="object-cover"

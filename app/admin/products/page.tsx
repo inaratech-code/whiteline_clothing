@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/dialog';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import { resolveProductImageUrl } from '@/lib/utils/ai-images';
 
 export default function AdminProductsPage() {
   const { products, loading, mutate } = useProducts();
@@ -102,7 +103,7 @@ export default function AdminProductsPage() {
                       <div className="relative aspect-square bg-muted">
                         {product.images && product.images.length > 0 ? (
                           <Image
-                            src={product.images[0]}
+                            src={resolveProductImageUrl(product.images[0])}
                             alt={product.name}
                             fill
                             className="object-cover"
@@ -156,7 +157,7 @@ export default function AdminProductsPage() {
                       <div className="relative aspect-square bg-muted">
                         {product.images && product.images.length > 0 ? (
                           <Image
-                            src={product.images[0]}
+                            src={resolveProductImageUrl(product.images[0])}
                             alt={product.name}
                             fill
                             className="object-cover"

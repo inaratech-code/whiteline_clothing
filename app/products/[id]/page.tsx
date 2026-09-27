@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useProduct } from '@/lib/hooks/useProducts';
+import { resolveProductImageUrl } from '@/lib/utils/ai-images';
 import { useCartContext } from '@/contexts/CartContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -15,7 +17,7 @@ import {
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ShoppingBag, Heart } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -23,27 +25,36 @@ export default function ProductDetailPage() {
   const productId = params.id as string;
   const { product, loading } = useProduct(productId);
   const { addToCart } = useCartContext();
+  const { user } = useAuthContext();
 
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [showNotification, setShowNotification] = useState(false);
+  const [actionError, setActionError] = useState('');
+
+  const validateSelection = () => {
+    if (!product) {
+      setActionError('Product not loaded. Please refresh the page.');
+      return false;
+    }
+
+    if (!selectedSize) {
+      setActionError('Please select a size.');
+      return false;
+    }
+
+    if (product.stock === 0) {
+      setActionError('This product is out of stock.');
+      return false;
+    }
+
+    setActionError('');
+    return true;
+  };
 
   const handleAddToCart = () => {
-    if (!product) {
-      alert('Product not loaded. Please refresh the page.');
-      return;
-    }
-    
-    if (!selectedSize) {
-      alert('Please select a size');
-      return;
-    }
-    
-    if (product.stock === 0) {
-      alert('This product is out of stock');
-      return;
-    }
+    if (!validateSelection() || !product || !selectedSize) return;
 
     addToCart({
       productId: product.id,
@@ -53,26 +64,12 @@ export default function ProductDetailPage() {
       price: product.price,
     });
     
-    // Show notification
     setShowNotification(true);
     setTimeout(() => setShowNotification(false), 3000);
   };
 
   const handleBuyNow = () => {
-    if (!product) {
-      alert('Product not loaded. Please refresh the page.');
-      return;
-    }
-    
-    if (!selectedSize) {
-      alert('Please select a size');
-      return;
-    }
-    
-    if (product.stock === 0) {
-      alert('This product is out of stock');
-      return;
-    }
+    if (!validateSelection() || !product || !selectedSize) return;
 
     addToCart({
       productId: product.id,
@@ -82,7 +79,7 @@ export default function ProductDetailPage() {
       price: product.price,
     });
 
-    router.push('/checkout');
+    router.push(user ? '/checkout' : '/auth/login?redirect=/checkout');
   };
 
   if (loading) {
@@ -124,7 +121,7 @@ export default function ProductDetailPage() {
           <div className="relative aspect-square mb-4 bg-muted overflow-hidden">
             {product.images && product.images.length > 0 ? (
               <Image
-                src={product.images[selectedImage]}
+                src={resolveProductImageUrl(product.images[selectedImage])}
                 alt={product.name}
                 fill
                 className="object-cover"
@@ -147,7 +144,7 @@ export default function ProductDetailPage() {
                   }`}
                 >
                   <Image
-                    src={image}
+                    src={resolveProductImageUrl(image)}
                     alt={`${product.name} ${index + 1}`}
                     fill
                     className="object-cover"
@@ -223,6 +220,9 @@ export default function ProductDetailPage() {
           )}
 
           {/* Actions */}
+          {actionError && (
+            <p className="text-sm text-red-600">{actionError}</p>
+          )}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Button
               type="button"

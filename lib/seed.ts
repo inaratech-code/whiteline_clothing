@@ -59,7 +59,7 @@ const products = [
     gender: 'men' as const,
     sizes: ['S', 'M', 'L', 'XL'],
     images: [
-      'https://images.unsplash.com/photo-1624222247344-550fb60583fd?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80',
       'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=800&q=80'
     ],
@@ -73,7 +73,7 @@ const products = [
     gender: 'men' as const,
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
     images: [
-      'https://images.unsplash.com/photo-1624222247344-550fb60583fd?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80',
       'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=800&q=80'
     ],
@@ -87,7 +87,7 @@ const products = [
     gender: 'men' as const,
     sizes: ['S', 'M', 'L', 'XL'],
     images: [
-      'https://images.unsplash.com/photo-1624222247344-550fb60583fd?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&q=80',
       'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=800&q=80'
     ],
@@ -102,7 +102,7 @@ const products = [
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
     images: [
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80'
     ],
     stock: 30,
@@ -116,7 +116,7 @@ const products = [
     sizes: ['S', 'M', 'L', 'XL'],
     images: [
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80'
     ],
     stock: 25,
@@ -130,7 +130,7 @@ const products = [
     sizes: ['M', 'L', 'XL', 'XXL'],
     images: [
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80'
     ],
     stock: 20,
@@ -144,7 +144,7 @@ const products = [
     sizes: ['S', 'M', 'L', 'XL'],
     images: [
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80'
     ],
     stock: 40,
@@ -158,7 +158,7 @@ const products = [
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
     images: [
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80'
     ],
     stock: 35,
@@ -172,7 +172,7 @@ const products = [
     sizes: ['M', 'L', 'XL'],
     images: [
       'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80',
-      'https://images.unsplash.com/photo-1624378515194-6b8c57a2a1aa?w=800&q=80',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',
       'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80'
     ],
     stock: 30,
