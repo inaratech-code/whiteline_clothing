@@ -4,7 +4,6 @@ import Image from 'next/image';
 const categories = [
   { label: 'SHOP T-SHIRTS', href: '/shop?category=shirts', image: '/images/home/category-tshirts.jpg' },
   { label: 'SHOP SHIRTS', href: '/shop?category=shirts', image: '/images/home/rack-shirts.jpg' },
-  { label: 'SHOP SHORTS', href: '/shop?category=shorts', image: '/images/home/category-shorts.jpg' },
   { label: 'SHOP JEANS', href: '/shop?category=pants', image: '/images/home/rack-pants.jpg' },
 ];
 

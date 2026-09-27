@@ -37,7 +37,6 @@ export function Footer() {
               <ul className="space-y-1.5 sm:space-y-2.5 text-[11px] sm:text-sm">
                 <li><Link href="/shop?category=shirts" className={linkClass}>Shirts</Link></li>
                 <li><Link href="/shop?category=pants" className={linkClass}>Trousers</Link></li>
-                <li><Link href="/shop?category=shorts" className={linkClass}>Shorts</Link></li>
                 <li><Link href="/shop" className={linkClass}>New Arrivals</Link></li>
               </ul>
             </div>

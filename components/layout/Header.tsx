@@ -54,7 +54,6 @@ export function Header() {
               <DropdownMenuContent className="min-w-[180px]">
                 <DropdownMenuItem asChild><Link href="/shop?category=shirts">Shirts</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link href="/shop?category=pants">Trousers</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="/shop?category=shorts">Shorts</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <Link href="/shop" className="text-2xl font-normal text-white hover:text-white/80 uppercase">NEW ARRIVALS</Link>
@@ -116,7 +115,6 @@ export function Header() {
               <div className="py-2 text-sm font-semibold uppercase text-white/70">Men</div>
               <Link href="/shop?category=shirts" className="py-3 pl-3 text-white hover:text-[#e88011]" onClick={closeMobileMenu}>Shirts</Link>
               <Link href="/shop?category=pants" className="py-3 pl-3 text-white hover:text-[#e88011]" onClick={closeMobileMenu}>Trousers</Link>
-              <Link href="/shop?category=shorts" className="py-3 pl-3 text-white hover:text-[#e88011]" onClick={closeMobileMenu}>Shorts</Link>
               <Link href="/shop" className="py-4 font-semibold uppercase text-white border-t border-white/10 mt-2" onClick={closeMobileMenu}>New Arrivals</Link>
               <a href="/#about" className="py-4 font-semibold uppercase text-white border-t border-white/10" onClick={closeMobileMenu}>About</a>
               <Link href="/contact" className="py-4 font-semibold uppercase text-white border-t border-white/10" onClick={closeMobileMenu}>Contact</Link>
